@@ -1,0 +1,1 @@
+worker: python rt_terraplanista.py
