@@ -31,7 +31,7 @@ def _main_():
     print('Último ID pesquisado:' + read_last_seen_str)
     for tweet in reversed(tweets):
         print(tweet.text)
-        api.create_friendship(tweet.user.screen_name)
+        #api.create_friendship(tweet.user.screen_name)
         api.retweet(tweet.id)
         store_last_seen(FILE_NAME, tweet.id)
         
