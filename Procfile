@@ -1,1 +1,1 @@
-worker: python rt_terraplanista.py
+worker: python lula.py
