@@ -5,7 +5,7 @@ import time
 api_key = os.environ['api_key']
 api_secret_key = os.environ['api_secret_key']
 access_key = os.environ['access_token']
-acess_secret = os.environ['access_secret']
+access_secret = os.environ['access_secret']
 auth = tweepy.OAuthHandler(api_key, api_secret_key)
 auth.set_access_token(access_key, access_secret)
 
