@@ -1,11 +1,11 @@
-from os import read, write
+from os import read, write, environ
 import tweepy
 import time
 
-api_key = ''
-api_secret_key = ''
-acess_key = ''
-acess_secret = ''
+api_key = environ['api_key']
+api_secret_key = environ['api_secret_key']
+acess_key = environ['acess_key']
+acess_secret = environ['acess_secret']
 auth = tweepy.OAuthHandler(api_key, api_secret_key)
 auth.set_access_token(acess_key, acess_secret)
 
@@ -27,7 +27,7 @@ def store_last_seen(FILE_NAME, last_seen_id):
 
 def _main_():
     read_last_seen_str = str(read_last_seen(FILE_NAME))
-    tweets = api.search('terraplanista -filter:retweets', since_id =  read_last_seen_str, lang = 'pt')
+    tweets = api.search('Lula -filter:retweets', since_id =  read_last_seen_str, lang = 'pt')
     print('Último ID pesquisado:' + read_last_seen_str)
     for tweet in reversed(tweets):
         print(tweet.text)
