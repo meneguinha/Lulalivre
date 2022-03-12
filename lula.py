@@ -5,6 +5,8 @@ import random
 import csv
 import pathlib
 
+#FOR WINDOWS "\\" for linux "/"
+
 api_key = os.environ['api_key']
 api_secret_key = os.environ['api_secret_key']
 access_key = os.environ['access_token']
