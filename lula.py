@@ -6,6 +6,7 @@ import csv
 import pathlib
 
 #FOR WINDOWS "\\" for linux "/"
+#FOR HEROKU APP USE "/". DONT FORGET TO CHANGE
 
 api_key = os.environ['api_key']
 api_secret_key = os.environ['api_secret_key']
@@ -37,16 +38,13 @@ def store_last_seen(FILE_NAME, last_seen_id):
 def phrase(text):
     global dict_lula
     dict_aux = dict_lula
-    print(dict_aux)
     list_of_words = []
     list_of_words = text.split()
-    print(list_of_words)
     link_to_post = 'Nada a declarar'
     for e in list_of_words:
         if e in dict_aux:
             elemento = str(e)
             link_to_post = dict_aux.get(elemento)
-            print(link_to_post)
             break
     return link_to_post    
     
@@ -58,7 +56,6 @@ def _main_():
         store_last_seen(FILE_NAME, tweet.id)
         text_tweet = tweet.full_text
         text_tweet = text_tweet.lower()
-        print(text_tweet)
         response = phrase(text_tweet)
         api.update_status('@'+ tweet.user.screen_name + ' ' + response, in_reply_to_status_id=tweet.id)
         
