@@ -14,7 +14,7 @@ auth.set_access_token(access_key, access_secret)
 
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 path_2 = str(pathlib.Path(__file__).parent.resolve())
-slash_2 = '\\'
+slash_2 = '/'
 archive_name_2 = "last_seen.txt"
 full_path_2 = path_2 + slash_2 + archive_name_2
 FILE_NAME = full_path_2
@@ -64,7 +64,7 @@ def _main_():
 def lula_dictionary():
     path = str(pathlib.Path(__file__).parent.resolve())
     print(path)
-    slash = '\\'
+    slash = '/'
     archive_name = "lula_dictionary.csv"
     full_path = path + slash + archive_name
 
