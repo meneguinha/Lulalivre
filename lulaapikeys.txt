@@ -1,4 +1,0 @@
-api_key = 8rOvpOPYcg3N9QtF8BBv4ktmh
-api_secret_key= 5LGHEhW6KrakVrwN85wgOEF4PNRpPoZvBqIpQXxN8PQyn6iN1v
-access_token = 1465045314067443712-okLX6b2pYsh1y2CqDkKPvUylPYU5Vc
-access_secret = wUKE2PjnZ6VyjOyPZevdUGFg6IUBU3ZhTcQfJzlGf97gv
