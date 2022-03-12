@@ -1,4 +1,4 @@
-from os import read, write, environ
+import os
 import tweepy
 import time
 import random
