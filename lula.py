@@ -5,6 +5,8 @@ import time
 import random
 import csv
 import pathlib
+import datetime
+import urllib.request
 
 #FOR WINDOWS "\\" for linux "/"
 #FOR HEROKU APP USE "/". DONT FORGET TO CHANGE
@@ -73,6 +75,15 @@ def lula_dictionary():
     return mydict
 
 dict_lula = lula_dictionary()
+hours_to_update = [['10','00'],['12','00'], ['14','00'], ['16','00'], ['18','00'], ['20','00'], ['22','00']]
+
 while True:
     _main_()
+    hour_minutes = str(datetime.datetime.now()).split()[1].split(':')
+    del hour_minutes[-1]
+    if hour_minutes in hours_to_update: 
+        url = 'https://docs.google.com/spreadsheets/d/1rK5C5D4ll2r8zQ8QXP2Div9A3DdYaknDXCBxcGmYDyE/export?format=csv'
+        urllib.request.urlretrieve(url)
+        dict_lula = lula_dictionary()
+        print('Tabela Atualizada às', datetime.datetime.now())
     time.sleep(60)
