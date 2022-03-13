@@ -39,16 +39,13 @@ def store_last_seen(FILE_NAME, last_seen_id):
 def phrase(text):
     global dict_lula
     dict_aux = dict_lula
-    list_of_words = []
-    list_of_words = text.split()
     link_to_post = 'Nada a declarar'
-    for e in list_of_words:
-        if e in dict_aux:
-            elemento = str(e)
-            link_to_post = dict_aux.get(elemento)
+    for key in dict_aux:
+        if key in text:
+            link_to_post = dict_aux.get(key)
             break
-    return link_to_post    
-    
+    return link_to_post
+
 def _main_():
     read_last_seen_str = str(read_last_seen(FILE_NAME))
     tweets = api.mentions_timeline(read_last_seen(FILE_NAME), tweet_mode = 'extended')
