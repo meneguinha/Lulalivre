@@ -66,12 +66,14 @@ def lula_dictionary():
     slash = '/'
     archive_name = "lula_dictionary.csv"
     full_path = path + slash + archive_name
+    full_path_4 = path + slash + "coors_new.csv"
 
     with open(full_path, mode='r') as infile:
         reader = csv.reader(infile)
         with open('coors_new.csv', mode='w') as outfile:
             writer = csv.writer(outfile)
             mydict = {rows[0]:rows[1] for rows in reader}
+            os.remove(full_path_4)
     return mydict
 
 dict_lula = lula_dictionary()
