@@ -79,7 +79,6 @@ hours_to_update = [['07','00'],['08','00'], ['09','00'], ['10','00'], ['11','00'
 full_path_3 = path_2 + slash_2 + "lula_dictionary.csv"
 
 while True:
-    global dict_lula
     _main_()
     hour_minutes = str(datetime.datetime.now()).split()[1].split(':')
     del hour_minutes[-1]
