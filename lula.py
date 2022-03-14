@@ -75,9 +75,10 @@ def lula_dictionary():
     return mydict
 
 dict_lula = lula_dictionary()
-hours_to_update = [['10','00'],['12','00'], ['14','00'], ['16','00'], ['18','00'], ['20','00'], ['22','00']]
+hours_to_update = [['07','00'],['08','00'], ['09','00'], ['10','00'], ['11','00'], ['12','00'], ['13','00'], ['14','00'],['15','00'] ,['16','00'],['17','00'],['18','00'],['19','00'],['20','00'],['21','00'],['22','00'],['23','00']]
 
 while True:
+    global dict_lula
     _main_()
     hour_minutes = str(datetime.datetime.now()).split()[1].split(':')
     del hour_minutes[-1]
