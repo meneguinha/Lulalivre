@@ -76,6 +76,7 @@ def lula_dictionary():
 
 dict_lula = lula_dictionary()
 hours_to_update = [['07','00'],['08','00'], ['09','00'], ['10','00'], ['11','00'], ['12','00'], ['13','00'], ['14','00'],['15','00'] ,['16','00'],['17','00'],['18','00'],['19','00'],['20','00'],['21','00'],['22','00'],['23','00']]
+full_path_3 = path_2 + slash_2 + "lula_dictionary.csv"
 
 while True:
     global dict_lula
@@ -84,7 +85,7 @@ while True:
     del hour_minutes[-1]
     if hour_minutes in hours_to_update: 
         url = 'https://docs.google.com/spreadsheets/d/1rK5C5D4ll2r8zQ8QXP2Div9A3DdYaknDXCBxcGmYDyE/export?format=csv'
-        urllib.request.urlretrieve(url)
+        urllib.request.urlretrieve(url, full_path_3)
         dict_lula = lula_dictionary()
         print('Tabela Atualizada às', datetime.datetime.now())
     time.sleep(60)
