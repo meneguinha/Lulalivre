@@ -72,6 +72,7 @@ def lula_dictionary():
         reader = csv.reader(infile)
         with open('coors_new.csv', mode='w') as outfile:
             writer = csv.writer(outfile)
+            mydict.clear()
             mydict = {rows[0]:rows[1] for rows in reader}
             outfile.flush()
         infile.flush()
