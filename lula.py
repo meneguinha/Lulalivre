@@ -76,6 +76,7 @@ def lula_dictionary():
             mydict = {rows[0]:rows[1] for rows in reader}
             outfile.flush()
         infile.flush()
+        reader.flush()
     os.remove(full_path_4)
     os.remove(full_path)
     return mydict
