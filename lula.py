@@ -76,7 +76,7 @@ def lula_dictionary():
             mydict = {rows[0]:rows[1] for rows in reader}
             outfile.flush()
         infile.flush()
-        reader.flush()
+        del reader
     os.remove(full_path_4)
     os.remove(full_path)
     return mydict
@@ -92,6 +92,7 @@ while True:
     if hour_minutes in hours_to_update: 
         url = 'https://docs.google.com/spreadsheets/d/1rK5C5D4ll2r8zQ8QXP2Div9A3DdYaknDXCBxcGmYDyE/export?format=csv'
         urllib.request.urlretrieve(url, full_path_3)
+        time.sleep(15)
         dict_lula = lula_dictionary()
         print('Tabela Atualizada às', datetime.datetime.now())
     time.sleep(60)
