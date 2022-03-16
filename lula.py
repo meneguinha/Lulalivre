@@ -7,6 +7,7 @@ import csv
 import pathlib
 import datetime
 import urllib.request
+import pandas as pd
 
 #FOR WINDOWS "\\" for linux "/"
 #FOR HEROKU APP USE "/". DONT FORGET TO CHANGE
@@ -57,46 +58,16 @@ def _main_():
         text_tweet = tweet.full_text
         text_tweet = text_tweet.lower()
         response = phrase(text_tweet)
-        try:
-            api.update_status('@'+ tweet.user.screen_name + ' ' + response, in_reply_to_status_id=tweet.id)
-        except tweepy.TweepError as e:
-            print(e.reason)
-            time.sleep(5)
+        api.update_status('@'+ tweet.user.screen_name + ' ' + response, in_reply_to_status_id=tweet.id)
         
     
 def lula_dictionary():
-    path = str(pathlib.Path(__file__).parent.resolve())
-    print(path)
-    slash = '/'
-    archive_name = "lula_dictionary.csv"
-    full_path = path + slash + archive_name
-    full_path_4 = path + slash + "coors_new.csv"
-
-    with open(full_path, mode='r') as infile:
-        reader = csv.reader(infile)
-        with open('coors_new.csv', mode='w') as outfile:
-            writer = csv.writer(outfile)
-            mydict = {}
-            mydict = {rows[0]:rows[1] for rows in reader}
-            outfile.flush()
-        infile.flush()
-        del reader
-    os.remove(full_path_4)
-    os.remove(full_path)
+    df = pd.read_csv("https://docs.google.com/spreadsheets/d/1rK5C5D4ll2r8zQ8QXP2Div9A3DdYaknDXCBxcGmYDyE/export?format=csv")
+    mydict = dict(zip(list(df.assunto), list(df.link)))
     return mydict
 
 dict_lula = lula_dictionary()
-hours_to_update = [['07','00'],['08','00'], ['09','00'], ['10','00'], ['11','00'], ['12','00'], ['13','00'], ['14','00'],['15','00'] ,['16','00'],['17','00'],['18','00'],['19','00'],['20','00'],['21','00'],['22','00'],['23','00']]
-full_path_3 = path_2 + slash_2 + "lula_dictionary.csv"
 
 while True:
     _main_()
-    hour_minutes = str(datetime.datetime.now()).split()[1].split(':')
-    del hour_minutes[-1]
-    if hour_minutes in hours_to_update: 
-        url = 'https://docs.google.com/spreadsheets/d/1rK5C5D4ll2r8zQ8QXP2Div9A3DdYaknDXCBxcGmYDyE/export?format=csv'
-        urllib.request.urlretrieve(url, full_path_3)
-        time.sleep(15)
-        dict_lula = lula_dictionary()
-        print('Tabela Atualizada às', datetime.datetime.now())
     time.sleep(60)
