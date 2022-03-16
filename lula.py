@@ -57,7 +57,11 @@ def _main_():
         text_tweet = tweet.full_text
         text_tweet = text_tweet.lower()
         response = phrase(text_tweet)
-        api.update_status('@'+ tweet.user.screen_name + ' ' + response, in_reply_to_status_id=tweet.id)
+        try:
+            api.update_status('@'+ tweet.user.screen_name + ' ' + response, in_reply_to_status_id=tweet.id)
+        except tweepy.TweepError as e:
+            print(e.reason)
+            time.sleep(5)
         
     
 def lula_dictionary():
