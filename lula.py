@@ -70,4 +70,5 @@ dict_lula = lula_dictionary()
 
 while True:
     _main_()
+    lula_dictionary()
     time.sleep(60)
