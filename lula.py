@@ -35,8 +35,8 @@ def store_last_seen(FILE_NAME, last_seen_id):
     file_write.close()
     return
 
-def phrase(text):
-    global dict_lula
+def phrase(text, dict_2):
+    dict_lula = dict_2
     dict_aux = dict_lula
     link_to_post = 'Nada a declarar'
     for key in dict_aux:
@@ -45,7 +45,8 @@ def phrase(text):
             break
     return link_to_post
 
-def _main_():
+def _main_(dict_1):
+    dict_lula = dict_1
     read_last_seen_str = str(read_last_seen(FILE_NAME))
     tweets = api.mentions_timeline(read_last_seen(FILE_NAME), tweet_mode = 'extended')
     print('Ultimo ID pesquisado:' + read_last_seen_str)
@@ -53,7 +54,7 @@ def _main_():
         store_last_seen(FILE_NAME, tweet.id)
         text_tweet = tweet.full_text
         text_tweet = text_tweet.lower()
-        response = phrase(text_tweet)
+        response = phrase(text_tweet, dict_lula)
         try:
             api.update_status('@'+ tweet.user.screen_name + ' ' + response, in_reply_to_status_id=tweet.id)
         except tweepy.TweepError as e:
@@ -69,6 +70,6 @@ def lula_dictionary():
 dict_lula = lula_dictionary()
 
 while True:
-    _main_()
+    _main_(dict_lula)
     dict_lula = lula_dictionary()
     time.sleep(60)
