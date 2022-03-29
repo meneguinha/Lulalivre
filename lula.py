@@ -69,6 +69,7 @@ def lula_dictionary():
 dict_lula = lula_dictionary()
 
 while True:
+    global dict_lula
     _main_()
-    lula_dictionary()
+    dict_lula = lula_dictionary()
     time.sleep(60)
