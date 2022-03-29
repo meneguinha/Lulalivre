@@ -66,6 +66,7 @@ def lula_dictionary():
     mydict = dict(zip(list(df.assunto), list(df.link)))
     return mydict
 
+global dict_lula
 dict_lula = lula_dictionary()
 
 while True:
