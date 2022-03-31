@@ -4,6 +4,8 @@ import tweepy
 import time
 import pathlib
 import pandas as pd
+import gspread
+from google.oauth2 import service_account
 
 #FOR WINDOWS "\\" for linux "/"
 #FOR HEROKU APP USE "/". DONT FORGET TO CHANGE
@@ -22,18 +24,36 @@ archive_name_2 = "last_seen.txt"
 full_path_2 = path_2 + slash_2 + archive_name_2
 FILE_NAME = full_path_2
 
+json_file = "config.json"
+full_path_config = path_2 + slash_2 + json_file
+scopes = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
 
-def read_last_seen(FILE_NAME):
-    file_read = open(FILE_NAME, 'r')
-    last_seen_id = int(file_read.read().strip())
-    file_read.close()
-    return last_seen_id
+# def read_last_seen(FILE_NAME):
+#     file_read = open(FILE_NAME, 'r')
+#     last_seen_id = int(file_read.read().strip())
+#     file_read.close()
+#     return last_seen_id
 
-def store_last_seen(FILE_NAME, last_seen_id):
-    file_write = open(FILE_NAME, 'w')
-    file_write.write(str(last_seen_id))
-    file_write.close()
-    return
+# def store_last_seen(FILE_NAME, last_seen_id):
+#     file_write = open(FILE_NAME, 'w')
+#     file_write.write(str(last_seen_id))
+#     file_write.close()
+#     return
+
+def read_last_tweet():
+    last_tweet = wks.acell('A1').value
+    return last_tweet
+
+def store_last_tweet(last_seen_id):
+    lsid = str(last_seen_id)
+    wks.update('A1', lsid)
+
+def log():
+    credentials = service_account.Credentials.from_service_account_file(full_path_config)
+    scoped_credentials = credentials.with_scopes(scopes)
+    gc = gspread.authorize(scoped_credentials)
+    return gc
+
 
 def phrase(text, dict_2):
     dict_lula = dict_2
@@ -47,11 +67,12 @@ def phrase(text, dict_2):
 
 def _main_(dict_1):
     dict_lula = dict_1
-    read_last_seen_str = str(read_last_seen(FILE_NAME))
-    tweets = api.mentions_timeline(read_last_seen(FILE_NAME), tweet_mode = 'extended')
-    print('Ultimo ID pesquisado:' + read_last_seen_str)
+    #read_last_seen_str = str(read_last_seen(FILE_NAME))
+    lseen = read_last_tweet()
+    tweets = api.mentions_timeline(lseen, tweet_mode = 'extended')
+    print('Ultimo ID pesquisado:' + lseen)
     for tweet in reversed(tweets):
-        store_last_seen(FILE_NAME, tweet.id)
+        store_last_tweet(tweet.id)
         text_tweet = tweet.full_text
         text_tweet = text_tweet.lower()
         response = phrase(text_tweet, dict_lula)
@@ -68,6 +89,9 @@ def lula_dictionary():
     return mydict
 
 dict_lula = lula_dictionary()
+gs = log() 
+planilha = gs.open("last_seen")
+wks = planilha.get_worksheet(0)
 
 while True:
     _main_(dict_lula)
