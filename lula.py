@@ -6,6 +6,7 @@ import pathlib
 import pandas as pd
 import gspread
 from google.oauth2 import service_account
+from cryptography.fernet import Fernet
 
 #FOR WINDOWS "\\" for linux "/"
 #FOR HEROKU APP USE "/". DONT FORGET TO CHANGE
@@ -14,6 +15,9 @@ api_key = os.environ['api_key']
 api_secret_key = os.environ['api_secret_key']
 access_key = os.environ['access_token']
 access_secret = os.environ['access_secret']
+dec_key = os.environ['dec_key']
+dec_key = str(dec_key)
+
 auth = tweepy.OAuthHandler(api_key, api_secret_key)
 auth.set_access_token(access_key, access_secret)
 
@@ -25,7 +29,10 @@ full_path_2 = path_2 + slash_2 + archive_name_2
 FILE_NAME = full_path_2
 
 json_file = "config.json"
-full_path_config = path_2 + slash_2 + json_file
+json_enc = "config_enc.json"
+full_path_config = path + slash + json_file
+full_path_config_enc = path + slash + json_enc
+
 scopes = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
 
 # def read_last_seen(FILE_NAME):
@@ -39,6 +46,22 @@ scopes = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapi
 #     file_write.write(str(last_seen_id))
 #     file_write.close()
 #     return
+
+def decrypt():
+    # using the key
+    fernet = Fernet(dec_key)
+    
+    # opening the encrypted file
+    with open(full_path_config_enc, 'rb') as enc_file:
+        encrypted = enc_file.read()
+    
+    # decrypting the file
+    decrypted = fernet.decrypt(encrypted)
+    
+    # opening the file in write mode and
+    # writing the decrypted data
+    with open(full_path_config, 'wb') as dec_file:
+        dec_file.write(decrypted)
 
 def read_last_tweet():
     last_tweet = wks.acell('A1').value
@@ -92,6 +115,8 @@ dict_lula = lula_dictionary()
 gs = log() 
 planilha = gs.open("last_seen")
 wks = planilha.get_worksheet(0)
+
+decrypt()
 
 while True:
     _main_(dict_lula)
