@@ -30,8 +30,8 @@ FILE_NAME = full_path_2
 
 json_file = "config.json"
 json_enc = "config_enc.json"
-full_path_config = path + slash + json_file
-full_path_config_enc = path + slash + json_enc
+full_path_config = path_2 + slash_2 + json_file
+full_path_config_enc = path_2 + slash_2 + json_enc
 
 scopes = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
 
