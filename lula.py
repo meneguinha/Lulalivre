@@ -112,11 +112,12 @@ def lula_dictionary():
     return mydict
 
 dict_lula = lula_dictionary()
+
+decrypt()
+
 gs = log() 
 planilha = gs.open("last_seen")
 wks = planilha.get_worksheet(0)
-
-decrypt()
 
 while True:
     _main_(dict_lula)
